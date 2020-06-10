@@ -1,0 +1,28 @@
+---
+- name: Install the Elastic GPG key
+  rpm_key:
+    state: present
+    key: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+
+
+- name: Install the Elastic repository
+  yum_repository:
+    name: elastic-7.X
+    baseurl: https://artifacts.elastic.co/packages/7.x/yum
+    description: Elastic repository for 7.x packages
+
+
+- name: Install filebeat
+  package:
+    name: filebeat
+    state: present
+
+
+- name: Configure filebeat
+  template:
+    src: filebeat.yml
+    dest: /etc/filebeat/filebeat.yml
+    owner: root
+    group: root
+    mode: 0600
+  notify: Restart filebeat
