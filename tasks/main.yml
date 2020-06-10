@@ -1,0 +1,4 @@
+---
+- import_tasks: elk_client.yml
+  tags:
+    - elk_client
